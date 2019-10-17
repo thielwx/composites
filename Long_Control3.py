@@ -37,7 +37,7 @@ v = var_dict()
 
 def glm5(case):
     
-    cmd = 'python /localdata/PyScripts/utilities/GLM5_min.py '+case
+    cmd = 'python /localdata/PyScripts/utilities/GLM5_min_20km.py '+case
     p = sp.Popen(cmd,shell=True)
     p.wait()
     
@@ -107,6 +107,6 @@ indexes = np.arange(0,len(start_list))
 
 
 for i in indexes:
-    #glm5(case+'/'+start_list[i])
+    glm5(case+'/'+start_list[i])
     binned(case+'/'+start_list[i])
     

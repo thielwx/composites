@@ -149,7 +149,7 @@ ABI_composite = np.zeros((1,1500,2500)).astype(np.float16)
 
 
 
-
+#Loop that compiles the datasets to make the comparisions between the two
 GLM_composite = np.zeros((1,150,250)).astype(np.float16)
 ABI_composite = np.zeros((1,150,250)).astype(np.float16)
 
@@ -166,9 +166,10 @@ for i in filelist_index:
     else:
         ABI_new = resample(ABI_var)
     
-    #Back the resolution out to 20 km points (150,250)    
+    #Back the resolution out to 20 km points (150,250)   NOTE: The GLM data is backed out to 20 in the GLM5_min_20km.py script now
     ABI_expand = gridexpand(ABI_new,v[ABIp][4])
-    GLM_expand = gridexpand(GLM_var,v[GLMp][4])
+    #GLM_expand = gridexpand(GLM_var,v[GLMp][4])
+    GLM_expand = GLM_var
     
     ABI_processed = np.expand_dims(ABI_expand,axis=0)
     GLM_processed = np.expand_dims(GLM_expand,axis=0)
@@ -226,6 +227,7 @@ ABIn_pd = separator(ABI_compositen)
 GLM_pd = separator(GLM_compositef)
 
 
+#Converting nJ to fJ
 if GLMp == 'FE':
     GLM_pd *= 10**6
     

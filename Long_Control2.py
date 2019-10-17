@@ -40,6 +40,13 @@ def glmtools(case,start_date,end_date):
     return 0
 
 
+def glmremove(case,start_date,end_date):
+   cmd = 'rm -rf /localdata/cases/'+case+'/GLM/'
+    p = sp.Popen(cmd,shell=True)
+    p.wait()
+
+    return 0
+
 
 
 
@@ -87,6 +94,8 @@ indexes = np.arange(0,len(start_list))
 
 for i in indexes:
     glmtools(case+'/'+start_list[i],start_list[i],end_list[i])
+    glmremove(case+'/'+start_list[i],start_list[i],end_list[i])
+
 
     
 
