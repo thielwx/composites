@@ -33,7 +33,7 @@ import sys
 
 def glmtools(case,start_date,end_date):
 
-    cmd = 'python /localdata/PyScripts/utilities/runglmtools.py '+case+' '+start_date+'0000 '+end_date+'0000'
+    cmd = 'python /localdata/PyScripts/utilities/runglmtools-fast.py '+case+' '+start_date+'0000 '+end_date+'0000'
     p = sp.Popen(cmd,shell=True)
     p.wait()
 
@@ -41,7 +41,7 @@ def glmtools(case,start_date,end_date):
 
 
 def glmremove(case,start_date,end_date):
-   cmd = 'rm -rf /localdata/cases/'+case+'/GLM/'
+    cmd = 'rm -rf /localdata/cases/'+case+'/GLM/'
     p = sp.Popen(cmd,shell=True)
     p.wait()
 

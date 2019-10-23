@@ -38,7 +38,7 @@ v = var_dict()
 
 def ABI_pull(case, start_date, end_date):
     for i in ['ACMC','ACHAC','CMIPC13']:
-        print (i)
+        print (i+' '+start_date)
         cmd = 'python /localdata/PyScripts/utilities/getgoes16.py ABI '+i+' '+case+' '+start_date+'00 '+end_date+'00'
         p = sp.Popen(cmd,shell=True)
         p.wait()
@@ -47,7 +47,7 @@ def ABI_pull(case, start_date, end_date):
 
 
 def GLM_pull(case, start_date, end_date):
-    print ('GLM')
+    print ('GLM '+start_date)
     cmd = 'python /localdata/PyScripts/utilities/getgoes16.py GLM GLM '+case+' '+start_date+'00 '+end_date+'00'
     p = sp.Popen(cmd,shell=True)
     p.wait()
