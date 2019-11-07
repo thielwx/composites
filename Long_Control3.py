@@ -35,30 +35,12 @@ v = var_dict()
 # # 3) Create GLM 5-minute composites
 
 
-def glm5(case):
+def dataframes(case,start,end,name):
     
-    cmd = 'python /localdata/PyScripts/utilities/GLM5_min_20km.py '+case
+    cmd = 'python /localdata/PyScripts/composites/make_df.py '+case+' '+start+' '+end+' '+name
     p = sp.Popen(cmd,shell=True)
     p.wait()
     
-    return 0
-
-
-# # 4) Create the daily binned composites that merge ABI and GLM data
-
-
-def binned(case):
-    
-    for i in ['FED','AFA','MFA','FE']: 
-        cmd = 'python /localdata/PyScripts/composites/20km_composites.py CMIP13 '+i+' '+case
-        p = sp.Popen(cmd,shell=True)
-        p.wait()
-        
-    for i in ['ACHA']:
-        cmd = 'python /localdata/PyScripts/composites/20km_composites.py '+i+' FED '+case
-        p = sp.Popen(cmd,shell=True)
-        p.wait()
-        
     return 0
 
 
@@ -107,6 +89,5 @@ indexes = np.arange(0,len(start_list))
 
 
 for i in indexes:
-    glm5(case+'/'+start_list[i])
-    binned(case+'/'+start_list[i])
+    dataframes(case+'/'+start_list[i],start_list[i],end_list[i],case)
     
