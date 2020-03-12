@@ -55,11 +55,9 @@ def glmremove(case,start_date,end_date):
 #===========================================================
 
 
-
-
+startDT = datetime.datetime.now()
 
 args = sys.argv
-#args = ['long_test','2019/05/27','2019/05/29']
 
 case = args[1]
 start_date = args[2]
@@ -97,6 +95,13 @@ for i in indexes:
     glmremove(case+'/'+start_list[i],start_list[i],end_list[i])
 
 
+endDT = datetime.datetime.now()
+totalDT = endDT-startDT
+
+print ('Start time: '+str(startDT))
+print ('End time:   '+str(endDT))
+print ('Total running time: '+str(totalDT))
+    
     
 
 

@@ -44,6 +44,15 @@ def dataframes(case,start,end,name):
     return 0
 
 
+def lsr(case,start,end,name):
+    
+    cmd = 'python /localdata/PyScripts/composites/lsr_data.py '+case+' '+start+' '+end+' '+name
+    p = sp.Popen(cmd,shell=True)
+    p.wait()
+    
+    return 0
+
+
 
 
 #============================================================
@@ -51,11 +60,9 @@ def dataframes(case,start,end,name):
 #===========================================================
 
 
-
-
+startDT = datetime.datetime.now()
 
 args = sys.argv
-#args = ['long_test','2019/05/27','2019/05/29']
 
 case = args[1]
 start_date = args[2]
@@ -87,7 +94,14 @@ indexes = np.arange(0,len(start_list))
 
 
 
-
 for i in indexes:
-    dataframes(case+'/'+start_list[i],start_list[i],end_list[i],case)
+    #dataframes(case+'/'+start_list[i],start_list[i],end_list[i],case)
+    lsr(case+'/'+start_list[i],start_list[i],end_list[i],case)
+
+endDT = datetime.datetime.now()
+totalDT = endDT-startDT
+
+print ('Start time: '+str(startDT))
+print ('End time:   '+str(endDT))
+print ('Total running time: '+str(totalDT))
     

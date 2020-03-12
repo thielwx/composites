@@ -17,7 +17,7 @@ import glob
 def blooming(data):
         
     #Removing blooming if it's there
-    points = ((data['CMIP']>=270) & (data['FED']>=10) & (data['ACHA']<=4000) & (data['angle'] >= 55)) | (data['CMIP']<=100)
+    points = ((data['CMIP']>=270) & (data['FED']>=10) & (data['ACHA']<=4000)) | (data['CMIP']<=100)
     data = data[~points]
     
     return data
@@ -122,7 +122,7 @@ args = sys.argv
 
 case = args[1]
 
-lsrloc = '/localdata/cases/'+case+'/all_lsr_pre15min/'
+lsrloc = '/localdata/cases/'+case+'/all_lsr_10min/'
 goesloc = '/localdata/cases/'+case+'/data/'
 sloc = '/localdata/cases/'+case+'/combo_data/'
 
@@ -142,14 +142,14 @@ for i in index:
     lsr = pd.read_pickle(lsrloc+lsrlist[i])
     goes = pd.read_pickle(goesloc+goeslist[i])
     both = pd.concat((goes,lsr),axis=1)
-    #both = blooming(both)
+    both = blooming(both)
     
     all_goes = allgoes(both,all_goes) 
     
 if not os.path.exists(sloc):
     os.makedirs(sloc)
 
-all_goes.to_pickle(sloc+case+'_all_goes_bloom.pkl')
+all_goes.to_pickle(sloc+case+'_all_goes4.pkl')
 
 
 # In[ ]:

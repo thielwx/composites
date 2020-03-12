@@ -60,7 +60,7 @@ def GLM_pull(case, start_date, end_date):
 # Run like this: python Long_Control1.py 'casename' YYYY/MM/DD(start) YYYY/MM/DD(end)
 #===========================================================
 
-
+startDT = datetime.datetime.now()
 
 
 
@@ -103,7 +103,9 @@ for i in indexes:
     GLM_pull(case+'/'+start_list[i],start_list[i],end_list[i])
 
     
+endDT = datetime.datetime.now()
+totalDT = endDT-startDT
 
-
-
-
+print ('Start time: '+str(startDT))
+print ('End time:   '+str(endDT))
+print ('Total running time: '+str(totalDT))

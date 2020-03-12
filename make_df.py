@@ -271,12 +271,12 @@ def GLM_data(tlist,GLM_loc,GLM_list,ilist):
             #Gathering the 5-minute composites
             FED = magic(files,'flash_extent_density','sum')
             AFA = magic(files,'average_flash_area','avg')
-            TOE = magic(files,'total_energy','sum')*10**6
+            TOE = magic(files,'total_energy','max')*10**6
             MFA = magic(files,'minimum_flash_area','min')
             #Expanding the resolution to 20km
             FED = gridexpand(FED,'max')
             AFA = gridexpand(AFA,'avg')
-            TOE = gridexpand(TOE ,'max')
+            TOE = gridexpand(TOE,'max')
             MFA = gridexpand(MFA,'min')
             
             df = GLMdf(FED,AFA,TOE,MFA,ilist,i) #Funciton that puts the data into the dataframe
@@ -325,7 +325,7 @@ def ABI_data(ACHA_loc,ACHA_list,ACM_loc,ACM_list,CMIP_loc,CMIP_list,ilist,tlist)
         
         ABI_df = pd.concat((ABI_df,df),axis=0,sort=True)
 
-    gprint ('ABI Dataframe Created')
+    print ('ABI Dataframe Created')
     return (ABI_df)
 
 
@@ -420,7 +420,7 @@ for i in index:
 GLM_df = GLM_data(tlist,GLM_loc,GLM_list[:-1],ilist)
 ABI_df = ABI_data(ACHA_loc,ACHA_list,ACM_loc,ACM_list,CMIP_loc,CMIP_list,ilist,tlist)
 
-del (GLM_list,ACHA_list,CMIP_list,ACM_list,i_list,y,j,h,M,d,m)
+del (GLM_list,ACHA_list,CMIP_list,ACM_list,ilist,y,j,h,M,d,m)
 
 #Dropping the Null indicies and also the placeholder column we used to make the empty dataframe
 ABI_df = ABI_df.drop(index=['Null'],columns=0)
@@ -429,7 +429,7 @@ GLM_df = GLM_df.drop(index=['Null'],columns=0)
 
 
 #Putting the two dataframes together
-dataframe = pd.concat((ABI_df,GLM_df),axis=0,sort=True).astype('float32')
+dataframe = pd.concat((ABI_df,GLM_df),axis=1,sort=True).astype('float32')
 del (ABI_df,GLM_df)
 
 #Saving the dataframe
