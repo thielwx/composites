@@ -110,7 +110,14 @@ def sr_formatter(LSR,tlist,tlist_LSR):
         
     #Gathering the hail, wind, and tornado reports
     hLSR = newdf[(newdf.loc[:,'TYPETEXT']=='HAIL')]
-    wLSR = newdf[((newdf.loc[:,'TYPETEXT']=='TSTM WND DMG') | (newdf.loc[:,'TYPETEXT']=='TSTM WND GST'))]
+    hLSR = hLSR.loc[hLSR['MAG'].values.astype(float) >=1.00,:] #Setting 1 inch threshold
+
+    wLSR1 = newdf[(newdf.loc[:,'TYPETEXT']=='TSTM WND DMG')]
+    wLSR2 = newdf[(newdf.loc[:,'TYPETEXT']=='TSTM WND GST')]
+    wLSR2 = wLSR2[wLSR2.MAG.astype(float)>=58.0] #Setting 58 mph threshold
+    wLSR = pd.concat((wLSR1,wLSR2),axis=0,sort=True)
+
+
     tLSR = newdf[(newdf.loc[:,'TYPETEXT']=='TORNADO')]
     
     return hLSR, wLSR, tLSR
@@ -122,7 +129,7 @@ def sr_formatter(LSR,tlist,tlist_LSR):
 #Expands how long the storm reports are kept in the data spatially
 
 def grid_insert(valid,x_loc,y_loc,etype,df):
-    deltas = [-15,-10,-5]
+    deltas = [-5,0]
     t = datetime.strptime(valid, '%Y%m%d-%H%M')
     
     for i in deltas:
@@ -259,5 +266,5 @@ df = grid_edit(df,hLSR,'HAIL')
 df = grid_edit(df,wLSR,'WND')
 df = grid_edit(df,tLSR,'TOR')
 
-df.to_pickle('/localdata/cases/'+name+'/all_lsr_pre15min/'+'lsr_'+start+'.pkl')
+df.to_pickle('/localdata/cases/'+name+'/all_lsr_10min/'+'lsr_'+start+'.pkl')
 

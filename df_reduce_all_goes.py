@@ -149,7 +149,7 @@ for i in index:
 if not os.path.exists(sloc):
     os.makedirs(sloc)
 
-all_goes.to_pickle(sloc+case+'_all_goes4.pkl')
+all_goes.to_pickle(sloc+case+'_all_goes_10min_redo.pkl')
 
 
 # In[ ]:
